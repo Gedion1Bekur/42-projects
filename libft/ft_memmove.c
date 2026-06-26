@@ -6,44 +6,46 @@
 /*   By: gbekur <gbekur@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/24 22:00:38 by gbekur            #+#    #+#             */
-/*   Updated: 2026/06/25 22:08:40 by gbekur           ###   ########.fr       */
+/*   Updated: 2026/06/26 18:28:53 by gbekur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_memmove(size_t n, void dest[n], const void src[n], size_t n)
+void	*ft_memmove(void *dest, const void *src, size_t n)
 {
-}
+	unsigned char *d;
+	const unsigned char *s;
+	size_t i;
 
-void	*ft_memcpy(void *dest, const void *src, size_t n)
-{
-	unsigned char *dest_ptr;
-	const char *src_ptr;
-	size_t start;
-
-	start = 0;
-	dest_ptr = (unsigned char *)dest;
-	src_ptr = (const char *)src;
-
-	if (src_ptr < dest_ptr && dest_ptr < src_ptr + n)
+	d = (unsigned char *)dest;
+	s = (const char *)src;
+	if (!dest && !src)
+		return (NULL);
+	if (d > s && d < s + n)
 	{
 		while (n--)
 		{
-			
+			d[n] = s[n];
 		}
-		else
-		{
-			*dest_ptr++ = *src_ptr++;
-			start++;+
 	}
-	return (dest_ptr);
-}
+	else
+	{
+		while (n--)
+		{
+			*d++ = *s++;
+		}
+	}
+	return (dest);
+	/*
+	what i have learned ,
 
-// what are we doing  here :
-/*
-you will hav
+	so we te only thing that we need to check if if they are overlpaing or not if they
+	ara overlpaped or not , that is main idea ,
+		okay so we can do the other stuff
+
+	lilke if they are overlpadfed please move some buffer step to next  bucket
+	if they are not overlpaned call ft_memecpy!!
 
 
-
-*/
+	*/
