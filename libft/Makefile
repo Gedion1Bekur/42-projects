@@ -11,7 +11,9 @@ SRC = ft_isalpha \
       ft_strlen \
       ft_memset \
       ft_bzero \
-	  ft_memcpy
+	  ft_memcpy \
+	  ft_memmove \
+	  ft_strlcpy
 SRCS = $(addsuffix .c ,$(SRC))
 OBJS = $(addsuffix .o ,$(SRC))
 
