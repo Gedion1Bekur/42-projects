@@ -6,22 +6,33 @@
 /*   By: gbekur <gbekur@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/19 16:59:18 by gbekur            #+#    #+#             */
-/*   Updated: 2026/06/24 21:46:18 by gbekur           ###   ########.fr       */
+/*   Updated: 2026/06/26 23:15:09 by gbekur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <bsd/string.h>
 #include <ctype.h>
 #include <stdio.h>
 #include <string.h>
 
+typedef struct node
+{
+	int			data;
+	struct node	*next;
+}				node_t;
+
 int	main(void)
 {
-	char	str[] = "Warasw 42 gedion";
-	char	buffer[] = "Hello";
-	char	buf2[] = "Hello";
-	char	csrc[] = "Gedion Bekur";
-	char	cdest[20];
+	char str[] = "Warasw 42 gedion";
+	char buffer[] = "Hello";
+	char buf2[] = "Hello";
+	char csrc[] = "Gedion Bekur";
+	char cdest[20];
+	char str2[] = "Hhello";
+	char str3[] = "Hhello";
+	char src[20] = "ABCDEFGHIJ";
+	char dest[20];
 
 	// ft_isalpha
 	printf("ft_isalpha: %d\n", ft_isalpha(1));
@@ -48,6 +59,11 @@ int	main(void)
 	ft_memcpy(cdest, csrc, strlen(csrc) + 1);
 	printf("Copied string is %s\n", cdest);
 	memcpy(cdest, csrc, strlen(csrc) + 1);
-	printf("Orginal is %s", cdest);
+	printf("Orginal is %s\n", cdest);
+	printf("%s\n", (char *)ft_memmove(str2 + 1, str2, 3));
+	printf("%s\n", (char *)memmove(str3 + 1, str3, 3));
+	ft_strlcpy(dest, src, 3);
+	strlcpy(dest, src, 3);
+	printf("ft_strlcpy: %s\n", dest);
 	return (0);
 }
