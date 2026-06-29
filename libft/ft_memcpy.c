@@ -6,7 +6,7 @@
 /*   By: gbekur <gbekur@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/24 21:39:14 by gbekur            #+#    #+#             */
-/*   Updated: 2026/06/26 21:50:32 by gbekur           ###   ########.fr       */
+/*   Updated: 2026/06/29 23:08:01 by gbekur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ void	*ft_memcpy(void *dest, const void *src, size_t n)
 	const unsigned char	*src_ptr;
 	size_t				start;
 
+	if (!dest && !src)
+		return (NULL);
 	start = 0;
 	dest_ptr = (unsigned char *)dest;
 	src_ptr = (const unsigned char *)src;
@@ -28,4 +30,3 @@ void	*ft_memcpy(void *dest, const void *src, size_t n)
 	}
 	return (dest);
 }
-

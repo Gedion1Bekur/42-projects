@@ -6,7 +6,7 @@
 /*   By: gbekur <gbekur@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/28 19:15:20 by gbekur            #+#    #+#             */
-/*   Updated: 2026/06/28 21:04:25 by gbekur           ###   ########.fr       */
+/*   Updated: 2026/06/28 22:55:58 by gbekur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,16 +37,43 @@ void	count_of_nodes(struct node *head)
 		count++;
 		ptr = ptr->link;
 	}
-	printf("%d\n", count);
+	printf("linked list count : %d\n", count);
 }
+
+// best was printing data in linked list
+
+void	add_at_end(struct node *head, int data)
+{
+	struct node *ptr, *temp;
+	ptr = head;
+	temp = (struct node *)malloc(sizeof(struct node));
+	temp->data = data;
+	temp->link = NULL;
+	while (ptr->link != NULL)
+	{
+		ptr = ptr->link;
+	}
+	ptr->link = temp;
+}
+
+void	node_printer(struct node *head)
+{
+	struct node	*ptr;
+
+	ptr = head;
+	while (ptr != NULL)
+	{
+		printf("%d here\n", ptr->data);
+		ptr = ptr->link;
+	}
+}
+
 int	main(void)
 {
 	struct node *head = NULL;
 	head = (struct node *)malloc(sizeof(struct node));
 	head->data = 50;
 	head->link = NULL;
-
-	count_of_nodes(head);
 	struct node *currnet = malloc(sizeof(struct node));
 	currnet->data = 51;
 	currnet->link = NULL;
@@ -62,6 +89,12 @@ int	main(void)
 	currnet->data = 53;
 	currnet->link = NULL;
 	head->link->link->link = currnet;
+	;
+
+	printf("/*********************/\n");
+	add_at_end(head, 55);
+	add_at_end(head, 100);
+	node_printer(head);
 	count_of_nodes(head);
 	// struct node *current = malloc(sizeof(struct node));
 
@@ -82,17 +115,20 @@ int	main(void)
 	// third->link = forth;
 
 	// current->link = third;
-	printf("%d\n", head->data);
-	printf("%p\n", head->link);
 
-	printf("%d\n", head->link->link->data);
-	printf("%p\n", head->link->link->link);
+	// node insertion at end node
 
-	printf("%d\n", currnet->data);
-	printf("%p\n", currnet->link);
-	// printf("%p\n", third->link);
-	// printf("%d\n",forth->data);
-	// printf("%p\n", forth->link);
+	// printf("%d\n", head->data);
+	// printf("%p\n", head->link);
+
+	// printf("%d\n", head->link->link->data);
+	// printf("%p\n", head->link->link->link);
+
+	// printf("%d\n", currnet->data);
+	// printf("%p\n", currnet->link);
+	// // printf("%p\n", third->link);
+	// // printf("%d\n",forth->data);
+	// // printf("%p\n", forth->link);
 
 	return (0);
 }

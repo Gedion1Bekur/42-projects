@@ -1,8 +1,7 @@
 NAME = libft.a
 CC = gcc
 AR = ar rcs
-CfLAGS = -Wall -Wextra -Werror
-MAIN = main.c
+CFLAGS = -Wall -Wextra -Werror
 SRC = ft_isalpha \
       ft_isdigit \
       ft_isalnum \
@@ -13,25 +12,28 @@ SRC = ft_isalpha \
       ft_bzero \
 	  ft_memcpy \
 	  ft_memmove \
-	  ft_strlcpy
-SRCS = $(addsuffix .c ,$(SRC))
-OBJS = $(addsuffix .o ,$(SRC))
+	  ft_strlcpy \
+	  ft_strlcat
+SRCS = $(addsuffix .c, $(SRC))
+OBJS = $(addsuffix .o, $(SRC))
 
 all : $(NAME)	
 
 $(NAME) : $(OBJS)
 	@$(AR) $@ $^	
-	@echo "complied :) $(NAME)"
+	@echo "compiled :) $(NAME)"
+
 %.o : %.c
-	$(CC) $(CFLAGS)	-c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
 	@rm -f $(OBJS)
 	@echo "obj cleaned"
+
 fclean: clean
-	@rm -fr $(NAME)
+	@rm -f $(NAME)
 	@echo "cleaned all :)"
+
 re: fclean all
 
 .PHONY: all clean fclean re
-#.SILENT:

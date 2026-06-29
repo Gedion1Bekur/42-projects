@@ -6,20 +6,20 @@
 /*   By: gbekur <gbekur@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/20 17:27:08 by gbekur            #+#    #+#             */
-/*   Updated: 2026/06/26 15:18:16 by gbekur           ###   ########.fr       */
+/*   Updated: 2026/06/29 22:50:10 by gbekur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "libft.h"
 
 #include "libft.h"
 
 size_t	ft_strlen(const char *s)
 {
 	size_t	ret;
-	int		i;
 
-	i = 0;
 	ret = 0;
-	while (*(s + ret) != '\0')
+	while (s[ret] != '\0')
 	{
 		ret++;
 	}

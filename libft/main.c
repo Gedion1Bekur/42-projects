@@ -6,7 +6,7 @@
 /*   By: gbekur <gbekur@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/19 16:59:18 by gbekur            #+#    #+#             */
-/*   Updated: 2026/06/26 23:15:09 by gbekur           ###   ########.fr       */
+/*   Updated: 2026/06/29 23:58:12 by gbekur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ int	main(void)
 	char cdest[20];
 	char str2[] = "Hhello";
 	char str3[] = "Hhello";
-	char src[20] = "ABCDEFGHIJ";
-	char dest[20];
+	char src[] = "ABCDEFGHIJ";
+	char dest[5];
 
 	// ft_isalpha
 	printf("ft_isalpha: %d\n", ft_isalpha(1));
@@ -49,6 +49,9 @@ int	main(void)
 	printf("isprint: %d\n", isprint(31));
 	printf("ft_strlen: %lu\n", (long)ft_strlen(str));
 	printf("strlen: %lu\n", (long)strlen(str));
+
+	printf("from this line below all mem funcs \n");
+	printf("*********************************\n");
 	printf("ft_memset: %s\n", (char *)ft_memset(buffer, 'Z', 3));
 	printf("memset: %s\n", (char *)memset(buffer, 48, 3));
 	printf("before ft_bzero : %s\n", buf2);
@@ -60,10 +63,25 @@ int	main(void)
 	printf("Copied string is %s\n", cdest);
 	memcpy(cdest, csrc, strlen(csrc) + 1);
 	printf("Orginal is %s\n", cdest);
-	printf("%s\n", (char *)ft_memmove(str2 + 1, str2, 3));
-	printf("%s\n", (char *)memmove(str3 + 1, str3, 3));
-	ft_strlcpy(dest, src, 3);
-	strlcpy(dest, src, 3);
+	printf("ft_memmove: %s\n", (char *)ft_memmove(str2 + 2, str2, 3));
+	printf("mememove: %s\n ", (char *)memmove(str3 + 2, str3, 3));
+	// ft_strlcpy(dest, src, sizeof(dest));
+
+	printf("from this line below all strstr funcs \n");
+	printf("*********************************\n");
+
+	strlcpy(dest, src, sizeof(dest));
+
 	printf("ft_strlcpy: %s\n", dest);
+	int result1 = ft_strlcpy(dest, src, sizeof(dest));
+	printf("ft_strlcpy return (value): %d\n", result1);
+
+	// --- CASE 1: Buffer has plenty of room ---
+	char b_ft[15] = "Hello ", b_og[15] = "Hello ";
+size_t r_ft = ft_strlcat(b_ft, "World", 15);
+size_t r_og =    strlcat(b_og, "World", 15);
+printf("[ft] %s (ret: %zu)\n", b_ft, r_ft);
+printf("[og] %s (ret: %zu)\n", b_og, r_og);
+
 	return (0);
 }
