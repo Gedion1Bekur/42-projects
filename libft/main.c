@@ -6,7 +6,7 @@
 /*   By: gbekur <gbekur@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/19 16:59:18 by gbekur            #+#    #+#             */
-/*   Updated: 2026/06/29 23:58:12 by gbekur           ###   ########.fr       */
+/*   Updated: 2026/07/01 00:12:56 by gbekur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,9 @@ int	main(void)
 	char str3[] = "Hhello";
 	char src[] = "ABCDEFGHIJ";
 	char dest[5];
+
+	char var_ll = 'C';
+	char var_hl = 'c';
 
 	// ft_isalpha
 	printf("ft_isalpha: %d\n", ft_isalpha(1));
@@ -78,10 +81,32 @@ int	main(void)
 
 	// --- CASE 1: Buffer has plenty of room ---
 	char b_ft[15] = "Hello ", b_og[15] = "Hello ";
-size_t r_ft = ft_strlcat(b_ft, "World", 15);
-size_t r_og =    strlcat(b_og, "World", 15);
-printf("[ft] %s (ret: %zu)\n", b_ft, r_ft);
-printf("[og] %s (ret: %zu)\n", b_og, r_og);
+	size_t r_ft = ft_strlcat(b_ft, "World", 15);
+	size_t r_og = strlcat(b_og, "World", 15);
+	printf("[ft] %s (ret: %zu)\n", b_ft, r_ft);
+	printf("[og] %s (ret: %zu)\n", b_og, r_og);
+	printf("from this line below all toupper funcs \n");
+	printf("*********************************\n");
 
+	printf("or -ll : %d\n", ft_tolower(var_ll));
+	printf("To lower: %d\n", tolower(var_ll));
+	printf("To Upper: %d\n", ft_toupper(var_hl));
+	printf("or-hh : %d\n", toupper(var_hl));
+
+	printf("from this line below all strchr funcs \n");
+	printf("*********************************\n");
+	char strvar[] = "helloz";
+	char find_char = ' ';
+
+	printf("strchr check : %s\n", ft_strchr(strvar, find_char));
+	printf("strchr check : %s\n", strchr(strvar, find_char));
+
+	printf("strrchr check : %s\n", ft_strrchr(strvar, find_char));
+	printf("strrchr check : %s\n", strrchr(strvar, find_char));
+
+	/*
+	The Zero Case: What happens if n = 0?The Overflow Case: What happens if n = 1000 but the string only has 3 letters?The Empty Case: What happens if one string is totally empty ("")?If you test your change against those three scenarios using real numbers,
+	you will see the logic bugs immediately before you even compile the code.
+		*/
 	return (0);
 }

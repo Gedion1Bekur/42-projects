@@ -13,7 +13,11 @@ SRC = ft_isalpha \
 	  ft_memcpy \
 	  ft_memmove \
 	  ft_strlcpy \
-	  ft_strlcat
+	  ft_strlcat \
+	  ft_tolower \
+	  ft_toupper \
+	  ft_strchr \
+	  ft_strrchr
 SRCS = $(addsuffix .c, $(SRC))
 OBJS = $(addsuffix .o, $(SRC))
 

@@ -7,12 +7,12 @@ struct			node
 	struct node	*link;
 };
 
-struct node	*add_node_end(struct node *ptr, int data)
+struct node	*add_end_node(struct node *ptr, int end_data)
 {
 	struct node	*temp;
 
 	temp = (struct node *)malloc(sizeof(struct node));
-	temp->data = data;
+	temp->data = end_data;
 	temp->link = NULL;
 	ptr->link = temp;
 	return (temp);
@@ -21,16 +21,14 @@ struct node	*add_node_end(struct node *ptr, int data)
 int	main(void)
 {
 	struct node *head = (struct node *)malloc(sizeof(struct node));
-	head->data = 20;
+	head->data = 10;
 	head->link = NULL;
 
 	struct node *ptr = head;
-    
-	ptr = add_node_end(ptr, 25);
-	ptr = add_node_end(ptr, 30);
-	ptr = add_node_end(ptr, 40);
-    ptr = add_node_end(ptr, 50);
-    
+	ptr = add_end_node(ptr, 20);
+	ptr = add_end_node(ptr, 30);
+	ptr = add_end_node(ptr, 40);
+
 	ptr = head;
 
 	while (ptr != NULL)
