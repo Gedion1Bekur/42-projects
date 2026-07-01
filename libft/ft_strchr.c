@@ -6,7 +6,7 @@
 /*   By: gbekur <gbekur@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/30 19:53:43 by gbekur            #+#    #+#             */
-/*   Updated: 2026/06/30 23:23:31 by gbekur           ###   ########.fr       */
+/*   Updated: 2026/07/01 21:52:52 by gbekur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,10 @@ char	*ft_strchr(const char *s, int c)
 		if ((s[i] == fnd))
 			return ((char *)&s[i]);
 		i++;
-		if (s[i] == fnd)
-			return ((char *)&s[i]);
+	}
+	if (s[i] == fnd)
+	{
+		return ((char *)&s[i]);
 	}
 	return (NULL);
 }

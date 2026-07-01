@@ -6,7 +6,7 @@
 /*   By: gbekur <gbekur@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/26 18:48:29 by gbekur            #+#    #+#             */
-/*   Updated: 2026/06/29 23:54:13 by gbekur           ###   ########.fr       */
+/*   Updated: 2026/07/01 21:48:22 by gbekur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,12 @@ size_t	ft_strlcat(char *dst, const char *src, size_t size)
 	size_t	i;
 	size_t	j;
 
-	dest_len = ft_strlen(dst);
 	src_len = ft_strlen(src);
+	dest_len = 0;
+	while (dst[dest_len] != '\0' && dest_len < size)
+	{
+		dest_len++;
+	}
 	if (size <= dest_len)
 		return (size + src_len);
 	i = dest_len;
