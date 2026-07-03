@@ -6,7 +6,7 @@
 /*   By: gbekur <gbekur@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/19 16:59:18 by gbekur            #+#    #+#             */
-/*   Updated: 2026/07/03 17:24:04 by gbekur           ###   ########.fr       */
+/*   Updated: 2026/07/03 21:36:49 by gbekur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <bsd/string.h>
 #include <ctype.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 typedef struct node
@@ -123,5 +124,21 @@ int	main(void)
 	printf("ft_memcmp: %d\n", reuslt1);
 	printf("OR memcmp: %d\n", reuslt2);
 	;
+
+	printf("Test 1 (orig): %d (Expected: 0)\n", atoi("--42"));
+	printf("Test 1 (your): %d (Expected: 0)\n", ft_atoi("--42"));
+	printf("\n");
+	// Test 2: Standard negative number with spaces
+	printf("Test 2 (orig): %d (Expected: -42)\n", atoi("   -42"));
+	printf("Test 2 (your): %d (Expected: -42)\n", ft_atoi("   -42"));
+
+	//  " " Task one final ques haha :)))) ahah finally tho ""
+	printf("______________final quest of task on _______ here we go :)\n");
+	char big[] = "Gedion 42 student  here we go";
+	char lil[] = "no";
+
+	printf("(ft_strnstr/substring) %s\n", ft_strnstr(big, lil, ft_strlen(big)));
+	printf("(orig) %s\n", strnstr(big, lil, ft_strlen(big)));
+
 	return (0);
 }
