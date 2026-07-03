@@ -17,7 +17,9 @@ SRC = ft_isalpha \
 	  ft_tolower \
 	  ft_toupper \
 	  ft_strchr \
-	  ft_strrchr
+	  ft_strrchr \
+	  ft_memchr \
+	  ft_memcmp
 SRCS = $(addsuffix .c, $(SRC))
 OBJS = $(addsuffix .o, $(SRC))
 

@@ -6,7 +6,7 @@
 /*   By: gbekur <gbekur@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/16 21:05:00 by gbekur            #+#    #+#             */
-/*   Updated: 2026/07/01 22:29:41 by gbekur           ###   ########.fr       */
+/*   Updated: 2026/07/03 16:12:08 by gbekur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,6 @@ char	*ft_strchr(const char *s, int c);
 char	*ft_strrchr(const char *s, int c);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 int		ft_memcmp(const void *s1, const void *s2, size_t n);
+void	*ft_memchr(const void *s, int c, size_t n);
 
 #endif

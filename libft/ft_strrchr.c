@@ -6,7 +6,7 @@
 /*   By: gbekur <gbekur@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/30 19:53:48 by gbekur            #+#    #+#             */
-/*   Updated: 2026/06/30 23:23:45 by gbekur           ###   ########.fr       */
+/*   Updated: 2026/07/03 16:53:20 by gbekur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*ft_strrchr(const char *s, int c)
 	char			*rember;
 
 	i = 0;
-    rember = NULL;
+	rember = NULL;
 	fnd = (char)c;
 	while (s[i] != '\0')
 	{

@@ -6,7 +6,7 @@
 /*   By: gbekur <gbekur@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/19 16:59:18 by gbekur            #+#    #+#             */
-/*   Updated: 2026/07/01 21:53:18 by gbekur           ###   ########.fr       */
+/*   Updated: 2026/07/03 17:24:04 by gbekur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,5 +108,20 @@ int	main(void)
 	The Zero Case: What happens if n = 0?The Overflow Case: What happens if n = 1000 but the string only has 3 letters?The Empty Case: What happens if one string is totally empty ("")?If you test your change against those three scenarios using real numbers,
 	you will see the logic bugs immediately before you even compile the code.
 		*/
+
+	// memecpr and main memory funtions
+
+	char memcpr1[] = {'a', 'B', 65};
+	int fnd = 65;
+	printf("ft_memchr check : %s\n", (char *)ft_memchr(memcpr1, fnd, 6));
+	printf("memcpr check : %s\n", (char *)memchr(memcpr1, fnd, 6));
+
+	char dst_mine[10] = "ABCz";
+	char src_mem[] = "ABCZ";
+	int reuslt1 = ft_memcmp(dst_mine, src_mem, 4);
+	int reuslt2 = memcmp(dst_mine, src_mem, 4);
+	printf("ft_memcmp: %d\n", reuslt1);
+	printf("OR memcmp: %d\n", reuslt2);
+	;
 	return (0);
 }
