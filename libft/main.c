@@ -6,7 +6,7 @@
 /*   By: gbekur <gbekur@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/19 16:59:18 by gbekur            #+#    #+#             */
-/*   Updated: 2026/07/03 21:36:49 by gbekur           ###   ########.fr       */
+/*   Updated: 2026/07/03 23:47:44 by gbekur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,6 +139,11 @@ int	main(void)
 
 	printf("(ft_strnstr/substring) %s\n", ft_strnstr(big, lil, ft_strlen(big)));
 	printf("(orig) %s\n", strnstr(big, lil, ft_strlen(big)));
+
+	printf("******************Task 2 *********************\n");
+	printf("******************Task 2 *********************\n");
+
+	printf("Result: %s\n", ft_substr("Hello World", 6, 5));
 
 	return (0);
 }
