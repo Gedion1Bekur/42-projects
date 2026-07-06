@@ -1,39 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gbekur <gbekur@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/07/03 17:40:19 by gbekur            #+#    #+#             */
-/*   Updated: 2026/07/06 18:16:19 by gbekur           ###   ########.fr       */
+/*   Created: 2026/07/06 19:22:37 by gbekur            #+#    #+#             */
+/*   Updated: 2026/07/06 19:57:13 by gbekur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_atoi(const char *nptr)
+char	*ft_strdup(const char *s1)
 {
-	long	result;
-	int		sign;
-	int		i;
+	char	*des;
+	size_t	i;
 
+	des = (char *)malloc(ft_strlen(s1) + 1);
+	if (!des)
+		return (NULL);
 	i = 0;
-	result = 0;
-	sign = 1;
-	while ((nptr[i] >= 9 && nptr[i] <= 13) || nptr[i] == 32)
-		i++;
-	if (nptr[i] == '+' || nptr[i] == '-')
+	while (s1[i])
 	{
-		if (nptr[i] == '-')
-			sign = -1;
+		des[i] = s1[i];
 		i++;
 	}
-	while (nptr[i] && (nptr[i] >= 48 && nptr[i] <= 57))
-	{
-		result = (result * 10) + nptr[i] - 48;
-		i++;
-	}
-	result *= sign;
-	return (result);
+	des[i] = '\0';
+	return (des);
 }

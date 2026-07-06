@@ -6,7 +6,7 @@
 /*   By: gbekur <gbekur@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/03 22:47:36 by gbekur            #+#    #+#             */
-/*   Updated: 2026/07/03 23:51:58 by gbekur           ###   ########.fr       */
+/*   Updated: 2026/07/06 19:54:06 by gbekur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,19 @@
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 
 {
-	char *sub;
-	size_t slen;
-	size_t i;
-	i = 0;
+	char	*sub;
+	size_t	slen;
+	size_t	i;
 
+	i = 0;
 	if (s == NULL)
 		return (NULL);
 	slen = ft_strlen(s);
 	if (start >= slen)
-		return ("");
+		return (ft_strdup(""));
 	if (len > slen - start)
-	{
 		len = slen - start;
-	}
-	sub = malloc(len + 1);
+	sub = (char *)malloc(len + 1);
 	if (!sub)
 		return (NULL);
 	while (i < len)

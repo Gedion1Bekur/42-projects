@@ -6,7 +6,7 @@
 /*   By: gbekur <gbekur@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/19 16:59:18 by gbekur            #+#    #+#             */
-/*   Updated: 2026/07/03 23:47:44 by gbekur           ###   ########.fr       */
+/*   Updated: 2026/07/06 19:56:15 by gbekur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,13 @@ int	main(void)
 	;
 
 	printf("Test 1 (orig): %d (Expected: 0)\n", atoi("--42"));
-	printf("Test 1 (your): %d (Expected: 0)\n", ft_atoi("--42"));
+
+	printf("Test 1 (orig): %d\n", atoi("--42"));
+	printf("atoi :edge case Test 1 (your): %d\n", ft_atoi("99999999999999"));
+	printf("atoi : edge case Test 1: %d\n", atoi("99999999999999"));
+
+	printf("=== STARTING ATOI TESTS ===\n\n");
+
 	printf("\n");
 	// Test 2: Standard negative number with spaces
 	printf("Test 2 (orig): %d (Expected: -42)\n", atoi("   -42"));
@@ -143,7 +149,9 @@ int	main(void)
 	printf("******************Task 2 *********************\n");
 	printf("******************Task 2 *********************\n");
 
-	printf("Result: %s\n", ft_substr("Hello World", 6, 5));
+	printf("Result: %s\n", ft_substr("Hello World", 8, 3));
+	char *res = ft_substr("abc", 8, 2);
+	free(res); 
 
 	return (0);
 }
