@@ -6,7 +6,7 @@
 /*   By: gbekur <gbekur@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/06 21:30:01 by gbekur            #+#    #+#             */
-/*   Updated: 2026/07/06 21:48:31 by gbekur           ###   ########.fr       */
+/*   Updated: 2026/07/06 22:29:07 by gbekur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	*ft_calloc(size_t count, size_t size)
 {
-	void *tmp;
+	void	*tmp;
 
 	if (count != 0 && size > ((size_t)-1) / count)
 		return (NULL);
