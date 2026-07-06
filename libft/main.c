@@ -6,7 +6,7 @@
 /*   By: gbekur <gbekur@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/19 16:59:18 by gbekur            #+#    #+#             */
-/*   Updated: 2026/07/06 19:56:15 by gbekur           ###   ########.fr       */
+/*   Updated: 2026/07/06 21:52:09 by gbekur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,10 @@ int	main(void)
 
 	printf("Result: %s\n", ft_substr("Hello World", 8, 3));
 	char *res = ft_substr("abc", 8, 2);
-	free(res); 
 
+	
+	free(res); 
+	
+	printf("ft_calloc: %p\n", (int *)ft_calloc(8, 3));
 	return (0);
 }
