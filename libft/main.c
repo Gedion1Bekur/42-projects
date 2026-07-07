@@ -6,7 +6,7 @@
 /*   By: gbekur <gbekur@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/19 16:59:18 by gbekur            #+#    #+#             */
-/*   Updated: 2026/07/06 21:52:09 by gbekur           ###   ########.fr       */
+/*   Updated: 2026/07/07 22:44:20 by gbekur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,11 +150,43 @@ int	main(void)
 	printf("******************Task 2 *********************\n");
 
 	printf("Result: %s\n", ft_substr("Hello World", 8, 3));
-	char *res = ft_substr("abc", 8, 2);
+	// char *res = ft_substr("abc", 8, 2);
 
-	
-	free(res); 
-	
+	// free(res);
+
 	printf("ft_calloc: %p\n", (int *)ft_calloc(8, 3));
+
+	printf("******************Task 2 malloc - calloc- free *********************\n");
+	printf("ft_strjoin: %s\n", ft_strjoin("", ""));
+
+	char	*res;
+
+	printf("--- Running ft_strtrim Tests ---\n\n");
+
+	// Test 1: Normal trimming from both sides
+	res = ft_strtrim("   hello world   ", " ");
+	printf("Test 1 (Normal spaces):\nExpected: 'hello world'\nResult:   '%s'\n\n", res);
+	free(res);
+
+	// Test 2: Multiple different characters in set
+	res = ft_strtrim("xXyHello WorldYxx", "xXyY");
+	printf("Test 2 (Multiple characters):\nExpected: 'Hello World'\nResult:   '%s'\n\n", res);
+	free(res);
+
+	// Test 3: Nothing to trim
+	res = ft_strtrim("no trim needed", "xyz");
+	printf("Test 3 (No matching set):\nExpected: 'no trim needed'\nResult:   '%s'\n\n", res);
+	free(res);
+
+	// Test 4: String is entirely made of the trim set
+	res = ft_strtrim("aaaaaaa", "a");
+	printf("Test 4 (Entire string is set):\nExpected: ''\nResult:   '%s'\n\n", res);
+	free(res);
+
+	// Test 5: Empty string input
+	res = ft_strtrim("", "abc");
+	printf("Test 5 (Empty string source):\nExpected: ''\nResult:   '%s'\n\n", res);
+	free(res);
+
 	return (0);
 }

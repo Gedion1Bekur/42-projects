@@ -25,7 +25,9 @@ SRC = ft_isalpha \
 	  ft_strnstr \
 	  ft_strdup \
 	  ft_calloc \
-	  ft_substr 
+	  ft_substr \
+	  ft_strjoin \
+	  ft_strtrim
 SRCS = $(addsuffix .c, $(SRC))
 OBJS = $(addsuffix .o, $(SRC))
 
