@@ -1,16 +1,16 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_split.c                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: gbekur <gbekur@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/07/07 23:22:40 by gbekur            #+#    #+#             */
-/*   Updated: 2026/07/08 22:54:46 by gbekur           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
-#include "libft.h"
+// get the size of the cotainter  and that size need to word witht out containter
+// get  the container size by counting words with out delimiter
+// then once i get this one asign to malloc + 1 as 2D ptr bucket
+// then we neeed to word counter agoan to only find the words ten assign them to mallox
+// we need to create a fun that  will checck when we delegtting malloc to ptr index n
+// it it fails free teh the main containter , if not go
+// var i need  how many var do
+
+/// in case of one malloc fail we need fun freeer fun
 
 static int	safe_malloc(char **token_v, int pos, size_t buf)
 {
@@ -29,7 +29,6 @@ static int	safe_malloc(char **token_v, int pos, size_t buf)
 	}
 	return (0);
 }
-
 static int	fill_tokens(char **token_v, char const *s, char del)
 {
 	size_t		len_token;
@@ -52,12 +51,11 @@ static int	fill_tokens(char **token_v, char const *s, char del)
 		}
 		if (safe_malloc(token_v, pos, len_token + 1))
 			return (1);
-		ft_strlcpy(token_v[pos], token_start, len_token + 1);
+		strlcpy(token_v[pos], token_start, len_token + 1);
 		pos++;
 	}
 	return (0);
 }
-
 static int	count_tokens(char const *s, char del)
 {
 	size_t	tokens;
