@@ -6,14 +6,11 @@
 /*   By: gbekur <gbekur@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/26 18:48:29 by gbekur            #+#    #+#             */
-/*   Updated: 2026/06/29 22:49:03 by gbekur           ###   ########.fr       */
+/*   Updated: 2026/07/08 18:34:46 by gbekur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <bsd/string.h>
-#include <stdio.h>
-#include <string.h>
 
 size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 {
