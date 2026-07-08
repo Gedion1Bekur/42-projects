@@ -6,7 +6,7 @@
 /*   By: gbekur <gbekur@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/19 16:59:18 by gbekur            #+#    #+#             */
-/*   Updated: 2026/07/07 22:44:20 by gbekur           ###   ########.fr       */
+/*   Updated: 2026/07/08 18:15:14 by gbekur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,37 +156,69 @@ int	main(void)
 
 	printf("ft_calloc: %p\n", (int *)ft_calloc(8, 3));
 
-	printf("******************Task 2 malloc - calloc- free *********************\n");
+	printf("******************Task 2 malloc- calloc- free *********************\n");
 	printf("ft_strjoin: %s\n", ft_strjoin("", ""));
 
-	char	*res;
+	char *res;
 
 	printf("--- Running ft_strtrim Tests ---\n\n");
 
 	// Test 1: Normal trimming from both sides
 	res = ft_strtrim("   hello world   ", " ");
-	printf("Test 1 (Normal spaces):\nExpected: 'hello world'\nResult:   '%s'\n\n", res);
+	printf("Test 1 (Normal spaces):\nExpected: 'hello world'\nResult:   '%s'\n\n",
+		res);
 	free(res);
 
 	// Test 2: Multiple different characters in set
 	res = ft_strtrim("xXyHello WorldYxx", "xXyY");
-	printf("Test 2 (Multiple characters):\nExpected: 'Hello World'\nResult:   '%s'\n\n", res);
+	printf("Test 2 (Multiple characters):\nExpected: 'Hello World'\nResult:   '%s'\n\n",
+		res);
 	free(res);
 
 	// Test 3: Nothing to trim
 	res = ft_strtrim("no trim needed", "xyz");
-	printf("Test 3 (No matching set):\nExpected: 'no trim needed'\nResult:   '%s'\n\n", res);
+	printf("Test 3 (No matching set):\nExpected: 'no trim needed'\nResult:   '%s'\n\n",
+		res);
 	free(res);
 
 	// Test 4: String is entirely made of the trim set
 	res = ft_strtrim("aaaaaaa", "a");
-	printf("Test 4 (Entire string is set):\nExpected: ''\nResult:   '%s'\n\n", res);
+	printf("Test 4 (Entire string is set):\nExpected: ''\nResult:   '%s'\n\n",
+		res);
 	free(res);
 
 	// Test 5: Empty string input
 	res = ft_strtrim("", "abc");
-	printf("Test 5 (Empty string source):\nExpected: ''\nResult:   '%s'\n\n", res);
+	printf("Test 5 (Empty string source):\nExpected: ''\nResult:   '%s'\n\n",
+		res);
 	free(res);
+
+	///
+
+	char *res3;
+	char **result;
+	int i;
+
+	// 1. Your Strtrim test evaluation
+	res3 = ft_strtrim("", "abc");
+	printf("Test 5 (Empty string source):\nExpected: ''\nResult:   '%s'\n\n",
+		res3);
+	free(res3); // FIX: Changed from res to res3
+
+	// 2. Your Split test evaluation (with added print logic)
+	printf("Test Split:\nString: \"xxxHelloe the most diffcult onexyz\" | Delimiter: 'x'\n");
+	result = ft_split("xxxHelloe the most diffcult onexyz", 'x');
+	if (!result)
+		return (1);
+
+	i = 0;
+	while (result[i] != NULL)
+	{
+		printf("  [Word %d]: '%s'\n", i, result[i]);
+		free(result[i]);
+		i++;
+	}
+	free(result);
 
 	return (0);
 }

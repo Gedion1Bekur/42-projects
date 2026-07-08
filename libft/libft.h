@@ -6,7 +6,7 @@
 /*   By: gbekur <gbekur@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/16 21:05:00 by gbekur            #+#    #+#             */
-/*   Updated: 2026/07/07 23:23:17 by gbekur           ###   ########.fr       */
+/*   Updated: 2026/07/08 17:47:08 by gbekur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,6 @@ char	*ft_substr(char const *s, unsigned int start, size_t len);
 void	*ft_calloc(size_t count, size_t size);
 char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_strtrim(char const *s1, char const *set);
+char	**ft_split(char const *s, char c);
 char	**ft_split(char const *s, char c);
 #endif
