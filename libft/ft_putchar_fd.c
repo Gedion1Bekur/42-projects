@@ -6,7 +6,12 @@
 /*   By: gbekur <gbekur@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/15 17:23:15 by gbekur            #+#    #+#             */
-/*   Updated: 2026/07/15 17:23:16 by gbekur           ###   ########.fr       */
+/*   Updated: 2026/07/15 19:34:02 by gbekur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+
+void	ft_putchar_fd(char c, int fd)
+{
+	write(fd, &c, 1);
+}
