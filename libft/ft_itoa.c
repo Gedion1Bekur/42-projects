@@ -6,37 +6,68 @@
 /*   By: gbekur <gbekur@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/09 22:57:14 by gbekur            #+#    #+#             */
-/*   Updated: 2026/07/15 17:19:49 by gbekur           ###   ########.fr       */
+/*   Updated: 2026/07/15 19:18:33 by gbekur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_atoi(const char *nptr)
-{
-	long	result;
-	int		sign;
-	int		i;
+#include "libft.h"
 
-	i = 0;
-	result = 0;
-	sign = 1;
-	while ((nptr[i] >= '\t' && nptr[i] <= '\r') || nptr[i] == ' ')
-		i++;
-	if (nptr[i] == '+' || nptr[i] == '-')
+static int	int_len(long nbr)
+{
+	int	count;
+
+	count = 0;
+	if (nbr < 0)
 	{
-		if (nptr[i] == '-')
-			sign = -1;
-		i++;
+		count++;
+		nbr = -nbr;
 	}
-	while (nptr[i] >= '0' && nptr[i] <= '9')
+	if (nbr == 0)
+		count++;
+	while (nbr != 0)
 	{
-		result = (result * 10) + (nptr[i] - '0');
-		if (result > 2147483647L && sign == 1)
-			return (-1);
-		if (result > 2147483648L && sign == -1)
-			return (0);
-		i++;
+		nbr /= 10;
+		count++;
 	}
-	return ((int)(result * sign));
+	return (count);
+}
+
+static char	*pre_conv(int len)
+{
+	char	*tmp;
+
+	tmp = (char *)malloc((len + 1) * sizeof(char));
+	if (!tmp)
+		return (NULL);
+	tmp[0] = '0';
+	return (tmp);
+}
+
+char	*ft_itoa(int n)
+{
+	int		len;
+	int		i;
+	char	*result;
+	long	nbr;
+
+	nbr = n;
+	len = int_len(nbr);
+	result = pre_conv(len);
+	if (!result)
+		return (NULL);
+	if (nbr < 0)
+		nbr = -nbr;
+	i = len - 1;
+	while (nbr != 0)
+	{
+		result[i] = ((nbr % 10) + '0');
+		nbr = nbr / 10;
+		i--;
+	}
+	if (n < 0)
+		result[0] = '-';
+	result[len] = '\0';
+	return (result);
 }
