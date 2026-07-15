@@ -35,7 +35,8 @@ SRC = ft_isalpha \
 	  ft_putstr_fd \
 	  ft_putendl_fd \
 	  ft_putnbr_fd \
-	  ft_calloc
+	  ft_calloc \
+	  ft_lstnew
 
 
 
