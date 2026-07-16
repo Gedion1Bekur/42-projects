@@ -6,10 +6,11 @@
 /*   By: gbekur <gbekur@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/15 17:23:15 by gbekur            #+#    #+#             */
-/*   Updated: 2026/07/15 21:47:33 by gbekur           ###   ########.fr       */
+/*   Updated: 2026/07/16 20:16:19 by gbekur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 
 void	ft_putchar_fd(char c, int fd)
 {
