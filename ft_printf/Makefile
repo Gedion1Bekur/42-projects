@@ -6,17 +6,13 @@
 #    By: gbekur <gbekur@student.42warsaw.pl>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/04 20:25:57 by szerisen          #+#    #+#              #
-#    Updated: 2026/07/24 18:12:55 by gbekur           ###   ########.fr        #
+#    Updated: 2026/07/31 17:39:29 by gbekur           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libftprintf.a
-
 OBJS = ${SRCS:.c=.o}
-
-
 RM		= rm -f
-
 GCCF = gcc -Wall -Wextra -Werror
 
 LIB = ar -rcs
