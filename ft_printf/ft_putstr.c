@@ -17,6 +17,11 @@ int	ft_putstr(const char *c)
 	int	printed;
 
 	printed = 0;
+	if (!c)
+	{
+		write(1, "(null)", 6);
+		return (6);
+	}
 	while (*c != '\0')
 	{
 		write(1, c, 1);

@@ -33,11 +33,6 @@ int	ft_putptr(void *ptr)
 	unsigned long long	addr;
 	int					printed;
 
-	if (!ptr)
-	{
-		write(1, "(nil)", 5);
-		return (5);
-	}
 	addr = (unsigned long long)ptr;
 	write(1, "0x", 2);
 	printed = 2;
