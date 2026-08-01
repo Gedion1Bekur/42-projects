@@ -1,27 +1,46 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr.c                                        :+:      :+:    :+:   */
+/*   ft_putptr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gbekur <gbekur@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/07/31 17:54:50 by gbekur            #+#    #+#             */
-/*   Updated: 2026/08/01 22:20:26 by gbekur           ###   ########.fr       */
+/*   Created: 2026/08/01 15:10:16 by gbekur            #+#    #+#             */
+/*   Updated: 2026/08/01 22:35:06 by gbekur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	ft_putstr(const char *c)
+static int	ft_putptr_hex(unsigned long long n)
 {
-	int	printed;
+	char	*hex_base;
+	int		printed;
 
+	hex_base = "0123456789abcdef";
 	printed = 0;
-	while (*c != '\0')
+	if (n >= 16)
 	{
-		write(1, c, 1);
-		c++;
-		printed++;
+		printed += ft_putptr_hex(n / 16);
 	}
+	write(1, &hex_base[n % 16], 1);
+	printed++;
+	return (printed);
+}
+
+int	ft_putptr(void *ptr)
+{
+	unsigned long long	addr;
+	int					printed;
+
+	if (!ptr)
+	{
+		write(1, "(nil)", 5);
+		return (5);
+	}
+	addr = (unsigned long long)ptr;
+	write(1, "0x", 2);
+	printed = 2;
+	printed += ft_putptr_hex(addr);
 	return (printed);
 }

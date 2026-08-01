@@ -1,27 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.h                                        :+:      :+:    :+:   */
+/*   ft_putunsigned.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gbekur <gbekur@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/07/31 17:17:01 by gbekur            #+#    #+#             */
-/*   Updated: 2026/08/01 22:19:24 by gbekur           ###   ########.fr       */
+/*   Created: 2026/08/01 15:07:37 by gbekur            #+#    #+#             */
+/*   Updated: 2026/08/01 22:01:42 by gbekur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PRINTF_H
-# define FT_PRINTF_H
+#include "ft_printf.h"
 
-# include <stdarg.h>
-# include <unistd.h>
+int	ft_putunsigned(unsigned int n)
+{
+	int	printed;
 
-int	ft_printf(const char *format, ...);
-int	ft_putchar(const char c);
-int	ft_putstr(const char *str);
-int	ft_putnbr(int n);
-int	ft_putunsigned(unsigned int n);
-int	ft_puthex(unsigned int n, int is_upper);
-int	ft_putptr(void *ptr);
-
-#endif
+	printed = 0;
+	if (n >= 10)
+		printed += ft_putunsigned(n / 10);
+	printed += ft_putchar((n % 10) + '0');
+	return (printed);
+}
