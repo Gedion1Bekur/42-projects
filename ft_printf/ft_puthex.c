@@ -6,7 +6,7 @@
 /*   By: gbekur <gbekur@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/01 14:48:38 by gbekur            #+#    #+#             */
-/*   Updated: 2026/08/01 22:51:06 by gbekur           ###   ########.fr       */
+/*   Updated: 2026/08/01 23:46:39 by gbekur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,3 +30,4 @@ int	ft_puthex(unsigned int n, int is_upper)
 	printed++;
 	return (printed);
 }
+

@@ -6,7 +6,7 @@
 /*   By: gbekur <gbekur@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/01 15:10:16 by gbekur            #+#    #+#             */
-/*   Updated: 2026/08/01 22:35:06 by gbekur           ###   ########.fr       */
+/*   Updated: 2026/08/01 23:49:36 by gbekur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,11 @@ int	ft_putptr(void *ptr)
 	unsigned long long	addr;
 	int					printed;
 
+	if (!ptr)
+	{
+		write(1, "(nil)", 5);
+		return (5);
+	}
 	addr = (unsigned long long)ptr;
 	write(1, "0x", 2);
 	printed = 2;
