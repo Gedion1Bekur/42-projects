@@ -1,0 +1,7 @@
+*.o
+/push_swap
+/checker
+/checker_Mac
+/checker_linux
+a.out
+.DS_Store
