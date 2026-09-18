@@ -12,26 +12,27 @@
 
 #include "push_swap.h"
 
-static void	push(t_stack **from, t_stack **to)
+static int	push(t_stack **from, t_stack **to)
 {
 	t_stack	*node;
 
 	if (!from || !*from || !to)
-		return ;
+		return (0);
 	node = *from;
 	*from = node->next;
 	node->next = *to;
 	*to = node;
+	return (1);
 }
 
 void	pa(t_ctx *ctx)
 {
-	push(&ctx->b, &ctx->a);
-	write_op(ctx, "pa\n", OP_PA);
+	if (push(&ctx->b, &ctx->a))
+		write_op(ctx, "pa\n", OP_PA);
 }
 
 void	pb(t_ctx *ctx)
 {
-	push(&ctx->a, &ctx->b);
-	write_op(ctx, "pb\n", OP_PB);
+	if (push(&ctx->a, &ctx->b))
+		write_op(ctx, "pb\n", OP_PB);
 }

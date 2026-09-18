@@ -64,11 +64,6 @@ static void	pop_back(t_ctx *ctx)
 
 void	sort_medium(t_ctx *ctx)
 {
-	if (stack_size(ctx->a) <= 5)
-	{
-		sort_small(ctx);
-		return ;
-	}
 	assign_indexes(ctx->a);
 	push_chunks(ctx);
 	pop_back(ctx);

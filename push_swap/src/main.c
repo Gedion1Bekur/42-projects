@@ -6,7 +6,7 @@
 /*   By: hcherif <hcherif@student.42warsaw.pl>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/20 13:25:06 by hcherif           #+#    #+#             */
-/*   Updated: 2026/09/17 19:23:29 by gbekur           ###   ########.fr       */
+/*   Updated: 2026/09/18 11:56:08 by hcherif          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static int	read_input(int argc, char **argv, t_ctx *ctx)
 	if (start < 0)
 		return (-1);
 	if (start >= argc)
-		return (0);
+		return (-1);
 	if (!parse_args(argc - start, argv + start, &ctx->a))
 		return (-1);
 	return (1);

@@ -5,3 +5,5 @@
 /checker_linux
 a.out
 .DS_Store
+*.gch
+*.gch

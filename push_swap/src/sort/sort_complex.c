@@ -34,11 +34,6 @@ void	sort_complex(t_ctx *ctx)
 	int	bit;
 	int	size;
 
-	if (stack_size(ctx->a) <= 5)
-	{
-		sort_small(ctx);
-		return ;
-	}
 	assign_indexes(ctx->a);
 	size = stack_size(ctx->a);
 	bit = 0;
