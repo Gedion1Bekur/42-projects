@@ -14,11 +14,6 @@
 
 void	sort_adaptive(t_ctx *ctx)
 {
-	if (stack_size(ctx->a) <= 5)
-	{
-		sort_small(ctx);
-		return ;
-	}
 	if (ctx->disorder < 0.2)
 		sort_simple(ctx);
 	else if (ctx->disorder < 0.5)

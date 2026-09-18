@@ -82,11 +82,6 @@ void	sort_simple(t_ctx *ctx)
 	int	kept;
 
 	size = stack_size(ctx->a);
-	if (size <= 5)
-	{
-		sort_small(ctx);
-		return ;
-	}
 	assign_indexes(ctx->a);
 	kept = mark_lis(ctx->a, size);
 	if (kept < 0)

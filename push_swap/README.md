@@ -1,191 +1,462 @@
-*This project has been created as part of the 42 curriculum by gbekur, hcherif.*
+*This project has been created as part of the 42 curriculum by gbekur and hcherif.*
 
 # push_swap
 
 ## Description
 
-`push_swap` sorts a list of integers using two stacks, `a` and `b`, and a fixed set of 11 operations. The program prints the sequence of operations that sorts stack `a` in ascending order, with the smallest number on top. The goal is to use as few operations as possible.
+`push_swap` is a sorting project that works with two stacks, `a` and `b`, and a limited set of operations.
 
-| Operation | Effect |
+The program takes a list of integers, puts them in stack `a`, and prints a sequence of Push_swap operations that sorts the stack in ascending order (smallest value on top).
+
+We implemented three main strategies:
+
+- `--simple` — O(n²)
+- `--medium` — O(n√n)
+- `--complex` — O(n log n)
+
+There is also an `--adaptive` mode that picks a strategy based on how disordered the input is. If you don't specify a strategy, `--adaptive` is used by default.
+
+The `--bench` flag prints extra information about the sorting process to `stderr`.
+
+---
+
+## Operations
+
+| Operation | Description |
 |---|---|
-| `sa` / `sb` / `ss` | swap the top two elements of `a` / `b` / both |
-| `pa` / `pb` | move the top of `b` onto `a` / the top of `a` onto `b` |
-| `ra` / `rb` / `rr` | rotate up: the first element becomes the last (`a` / `b` / both) |
-| `rra` / `rrb` / `rrr` | rotate down: the last element becomes the first (`a` / `b` / both) |
+| `sa` | Swap the first two elements of stack `a` |
+| `sb` | Swap the first two elements of stack `b` |
+| `ss` | `sa` and `sb` at the same time |
+| `pa` | Push the top element of `b` to `a` |
+| `pb` | Push the top element of `a` to `b` |
+| `ra` | Rotate stack `a` upwards |
+| `rb` | Rotate stack `b` upwards |
+| `rr` | `ra` and `rb` at the same time |
+| `rra` | Reverse rotate stack `a` |
+| `rrb` | Reverse rotate stack `b` |
+| `rrr` | `rra` and `rrb` at the same time |
 
-The program has four sorting strategies, each in a different complexity class. It measures how disordered the input is before making any move, and it can report statistics about each run.
+Operations are printed to `stdout`, one per line. We only print and count an operation if it actually changes at least one of the stacks.
+
+---
 
 ## Instructions
 
-### Build
+### Compilation
 
 ```bash
-make        # builds ./push_swap
-make clean  # removes object files
-make fclean # removes object files and the binary
-make re     # full rebuild
+make
 ```
 
-It compiles with `cc -Wall -Wextra -Werror`.
+The project is compiled with:
 
-### Run
+```text
+cc -Wall -Wextra -Werror
+```
+
+Available Makefile rules:
 
 ```bash
-./push_swap [--simple | --medium | --complex | --adaptive] [--bench] <integers>
+make
+make clean
+make fclean
+make re
 ```
 
-- The first integer is the top of stack `a`.
-- Flags must come before the numbers. `--adaptive` is the default.
-- Numbers can be separate arguments (`3 2 1`) or one quoted argument (`"3 2 1"`).
-- With no arguments, or with input that is already sorted, nothing is printed.
-- Invalid input prints `Error` followed by a newline on stderr. Invalid input includes non-integers, values outside the `int` range, duplicates, empty arguments and unknown flags.
+The Makefile avoids relinking when nothing has changed.
 
-| Flag | Strategy |
-|---|---|
-| `--simple` | O(n²): longest increasing subsequence + cheapest insertion |
-| `--medium` | O(n√n): chunk-based partitioning |
-| `--complex` | O(n log n): radix sort |
-| `--adaptive` | picks one of the above based on the measured disorder |
-| `--bench` | after sorting, prints statistics to stderr |
+---
 
-### Examples
+## Usage
 
 ```bash
-./push_swap 2 1 3 6 5 8
-ARG="4 67 3 87 23"; ./push_swap --adaptive $ARG | wc -l
+./push_swap [strategy] [--bench] <integers>
 ```
 
-Benchmark output goes to stderr, so the operations on stdout can still be piped to a checker:
+Available strategies:
 
 ```bash
-$ ./push_swap --bench 4 67 3 87 23 >/dev/null
-[bench] disorder: 40.00%
-[bench] strategy: Adaptive / O(n*sqrt(n))
-[bench] total_ops: 9
-[bench] sa: 0 sb: 0 ss: 0 pa: 2 pb: 2
-[bench] ra: 4 rb: 0 rr: 0 rra: 1 rrb: 0 rrr: 0
+--simple
+--medium
+--complex
+--adaptive
 ```
 
-## Algorithms
+`--adaptive` is the default.
 
-All costs below are counted in push_swap operations, as the subject requires, not in CPU steps. `n` is the number of integers.
+Examples:
 
-### Disorder metric
+```bash
+./push_swap 3 2 1
+./push_swap --simple 3 2 1
+./push_swap --medium 3 2 1
+./push_swap --complex 3 2 1
+./push_swap --adaptive 3 2 1
+```
 
-Disorder is the fraction of pairs `(i, j)` with `i < j` where `a[i] > a[j]`. Every pair is visited once, so the total number of pairs is `n(n-1)/2` and only the inversions need counting. It is computed before any move. It costs 0 operations and O(n²) CPU time.
+You can also pass numbers inside quoted arguments:
 
-### Shared building blocks
+```bash
+./push_swap "5 4 3 2 1"
+```
 
-- **Ranks.** Before most strategies run, each value is replaced by its rank from `0` to `n-1` (`assign_indexes`). Algorithms then work with a compact range whatever the original numbers are, including negatives and `INT_MIN`/`INT_MAX`.
-- **Small stacks (n ≤ 5).** All strategies use `sort_small` here: rotate the minimum to the top by the shorter direction, push it to `b`, and repeat until 3 values remain. Those 3 are sorted with at most 2 operations, then everything is pushed back. The worst case measured over all 120 permutations of 5 values is 10 operations.
-- **Operation counting.** Global variables are forbidden, so one context structure (`t_ctx`) holds both stacks, the mode, the disorder and a counter for each operation. Every operation passes through `write_op`, which increments the counter and prints. `ss`, `rr` and `rrr` change both stacks but are printed and counted as one operation.
+or mix quoted and separate arguments:
 
-### Simple: O(n²), longest increasing subsequence + cheapest insertion
+```bash
+./push_swap "5 4" 3 "2 1"
+```
 
-1. Compute a longest increasing subsequence (LIS) of the ranks with an O(n²) dynamic-programming pass. These values are already in the right order relative to each other, so they stay in `a`.
-2. Walk through `a` once: rotate past values in the LIS and push every other value to `b`.
-3. While `b` is not empty, look at every value in `b`. For each one, compute the rotations of `b` that bring it to the top and the rotations of `a` that bring its target to the top. The target is the smallest value in `a` greater than it, or the minimum of `a` if nothing is greater. Four combinations are possible: both up, both down, `a` up with `b` down, and `a` down with `b` up. Rotations in the same direction are merged into `rr`/`rrr`. Apply the cheapest combination, then `pa`.
-4. Rotate `a` so the minimum is on top.
+The first number is considered the top of stack `a`.
 
-**Time.** Step 2 costs at most `n` operations. Let `m` be the number of values outside the LIS. Each of the `m` insertions costs at most `|a| + |b| ≤ n` rotations plus one `pa`. The final rotation costs at most `n/2`. Total: `n + m(n+1) + n/2` = **O(n·m) ⊆ O(n²)**.
-**Space.** O(n): four integer arrays for the LIS, freed before any move, plus a `keep` flag in each node.
+- If the input is already sorted, no operations are printed.
+- If no arguments are provided, the program prints nothing.
 
-**Why this method for low disorder.** It only moves the values that break the increasing order. At low disorder most values are already in increasing order, so `m` is small and the cost stays close to linear.
+---
 
-### Medium: O(n√n), chunk-based partitioning
+## Error handling
 
-1. Let `k = ⌈√n⌉`, and keep a counter `pushed` of how many values are already in `b`.
-2. While `a` is not empty: if the top rank is below `pushed + k`, push it to `b`. If it is also smaller than the value under it, `rb`, so larger values stay near the top of `b`. Otherwise `ra`.
-3. While `b` is not empty: rotate the maximum of `b` to the top by the shorter direction, then `pa`.
+Invalid input prints:
 
-**Time.** Every value pushed to `b` has a rank below the current window `pushed + k`. So at any moment exactly `min(k, |a|)` values in `a` qualify for pushing. A full rotation through `a` pushes all of them, so the push phase needs at most `⌈n/k⌉ ≈ √n` full rotations of at most `n` operations each: **O(n√n)**. In the pop phase, values leave `b` in decreasing order. Because values were pushed in increasing windows and the `rb` step splits each window between the top and the bottom of `b`, the next maximum lies within about `k` positions of an end of `b`. That gives **O(n√n)** for the pop phase too.
-**Space.** O(n): the two stacks.
+```text
+Error
+```
 
-**Why this method for medium disorder.** Chunking uses the partial order in the input without paying for a full radix pass.
+followed by a newline to `stderr`.
 
-### Complex: O(n log n), LSD radix sort on ranks
+Invalid cases include:
 
-For each bit of the ranks, from least to most significant: go through `a` once, sending ranks with a `0` bit to `b` (`pb`) and rotating past ranks with a `1` bit (`ra`). Then push everything back (`pa`). After the last bit, `a` is sorted.
+- duplicate numbers;
+- non-numeric arguments;
+- numbers larger than `INT_MAX`;
+- numbers smaller than `INT_MIN`;
+- empty arguments;
+- whitespace-only arguments;
+- unknown flags;
+- a strategy or benchmark flag without any integers.
 
-**Time.** There are `⌈log₂ n⌉` passes. Each pass costs exactly `n` operations, plus at most `n` `pa`. Total at most `2n⌈log₂ n⌉` = **O(n log n)**: 1084 operations for 100 values and 6784 for 500, whatever the input order. The measured growth is shown under Performance.
-**Space.** O(n): the two stacks and the rank stored in each node.
+Examples:
 
-**Why this method for high disorder.** The cost does not depend on how the input is arranged, so it guarantees the O(n log n) bound when the input has no useful order to exploit.
+```bash
+./push_swap 1 1
+./push_swap 2147483648
+./push_swap -2147483649
+./push_swap 1 hello 3
+./push_swap ""
+./push_swap "    "
+./push_swap --unknown 3 2 1
+./push_swap --simple
+```
 
-### Adaptive
+---
 
-| Measured disorder | Method | Class |
+# Algorithms
+
+Complexity is measured by the number of Push_swap operations we generate. CPU work used only to decide which operations to perform is not counted.
+
+## Disorder metric
+
+Before sorting, we calculate how disordered the input is.
+
+For every pair of values `(i, j)` where `i < j`, an inversion exists when:
+
+```text
+a[i] > a[j]
+```
+
+Disorder is:
+
+```text
+number of inversions / total number of pairs
+```
+
+The result is between `0` and `1`:
+
+- `0.0` → completely sorted
+- `1.0` → completely reverse sorted
+
+We compute this before any sorting operation is performed.
+
+---
+
+## Indexes
+
+Before the main sorting strategies run, every value gets an index representing its rank.
+
+For example:
+
+```text
+40  -5  12  100
+```
+
+becomes conceptually:
+
+```text
+2   0   1   3
+```
+
+This lets the algorithms work with indexes from `0` to `n - 1` instead of depending on the original integer values.
+
+---
+
+## Simple strategy — O(n²)
+
+The Simple strategy uses a Longest Increasing Subsequence (LIS) together with cheapest insertion.
+
+### Step 1 — Find the LIS
+
+We use an O(n²) dynamic-programming algorithm to find a longest increasing subsequence. Values in that subsequence are marked with the `keep` field in each stack node.
+
+### Step 2 — Push other values to stack B
+
+Values in the LIS stay in stack `a`. Everything else is pushed to stack `b`.
+
+### Step 3 — Cheapest insertion
+
+For each value in `b`, we check:
+
+- how much `a` must rotate;
+- how much `b` must rotate;
+- whether both stacks can rotate together with `rr`;
+- whether both can reverse rotate together with `rrr`.
+
+We pick the cheapest move and push the value back to `a`.
+
+### Step 4 — Final rotation
+
+Once all elements are back in `a`, we rotate so the minimum element ends up on top.
+
+### Complexity
+
+Each inserted element may require up to O(n) operations, and there are up to O(n) such elements:
+
+```text
+O(n) × O(n) = O(n²)
+```
+
+---
+
+## Medium strategy — O(n√n)
+
+The Medium strategy is chunk-based.
+
+We set:
+
+```text
+chunk size ≈ √n
+```
+
+and divide values into ranges using their indexes.
+
+### Push phase
+
+Values whose indexes belong to the current allowed range are pushed from `a` to `b`. Other values are rotated in `a` until an eligible value reaches the top. The allowed range grows as values are pushed. Some values in `b` are rotated to keep larger values in useful positions.
+
+### Return phase
+
+We locate the largest value in `b`, rotate `b` in the shorter direction until it reaches the top, then push it back to `a`. This continues until `b` is empty.
+
+### Complexity
+
+With a chunk size around √n, we can process the input in about √n ranges. Each range may require O(n) stack operations, so the operation complexity is bounded by:
+
+```text
+O(n√n)
+```
+
+---
+
+## Complex strategy — O(n log n)
+
+The Complex strategy uses binary LSD radix sort.
+
+After converting every value to its index, we process each bit of those indexes, starting from the least significant:
+
+- if the bit is `1`, use `ra`;
+- if the bit is `0`, use `pb`.
+
+After one full pass through `a`, all values in `b` are pushed back with `pa`. We repeat this for each bit needed to represent the largest index.
+
+The number of required bits is roughly:
+
+```text
+log₂(n)
+```
+
+Each bit needs at most O(n) pushes and rotations, so:
+
+```text
+O(n) × O(log n) = O(n log n)
+```
+
+in the Push_swap operation model.
+
+---
+
+# Adaptive strategy
+
+Adaptive mode chooses one of the three strategies based on the disorder computed before sorting.
+
+| Disorder | Strategy | Complexity |
 |---|---|---|
-| `< 0.2` | Simple (LIS + cheapest insertion) | O(n²) |
-| `0.2 ≤ d < 0.5` | Medium (√n chunks) | O(n√n) |
-| `≥ 0.5` | Complex (radix) | O(n log n) |
+| `< 0.2` | Simple | O(n²) |
+| `0.2 ≤ disorder < 0.5` | Medium | O(n√n) |
+| `≥ 0.5` | Complex | O(n log n) |
 
-Stacks of 5 or fewer values always use `sort_small`.
+The choice depends only on the disorder value. Input size does not override an explicitly selected strategy.
 
-**Why these thresholds.** The subject sets the thresholds and the complexity class required for each regime. Each regime uses the method that fits it best:
-- **Below 0.2**, at most 20% of pairs are inverted, and usually only a small share of the values are misplaced. Keeping the LIS in place and inserting only the other values is cheap. On 500 values with 15–20% disorder it averages 2679 operations.
-- **Between 0.2 and 0.5**, much less of the order can be reused. Chunking uses what partial order remains and has a better worst-case guarantee than O(n²).
-- **At 0.5 and above**, the input has little usable order, which is about what random input looks like. Radix gives a fixed O(n log n) cost however the input is arranged.
+For example:
 
-The insertion method often uses fewer operations than radix at the sizes tested here, 100 to 500 values. Its worst case is still O(n²), while radix is O(n log n) in every case, and the subject asks each regime for a method within its complexity class.
+```bash
+./push_swap --complex 3 2 1
+```
 
-## Performance
+still runs the Complex strategy, and:
 
-Results from [ft_ps_tester](https://github.com/italoalmeida0/ft_ps_tester), 100 runs per row. Its generated disorder ranges are: simple 15–19.9%, medium 20–49.9%, complex 50–55%, adaptive 15–55%.
+```bash
+./push_swap --medium 3 2 1
+```
 
-| Size | Mode | Max | Min | Average | Fails |
-|---|---|---|---|---|---|
-| 100 | simple | 408 | 244 | 341 | 0 |
-| 100 | medium | 683 | 438 | 593 | 0 |
-| 100 | complex | 1084 | 1084 | 1084 | 0 |
-| 100 | adaptive | 1084 | 266 | 628 | 0 |
-| 500 | simple | 3319 | 2164 | 2679 | 0 |
-| 500 | medium | 6916 | 4240 | 5650 | 0 |
-| 500 | complex | 6784 | 6784 | 6784 | 0 |
-| 500 | adaptive | 6784 | 2192 | 5439 | 0 |
+runs Medium, regardless of how many elements you pass.
 
-On uniformly random input over the full `int` range (300 runs per size, default mode), disorder stays close to 50%. So the adaptive strategy mostly picks chunks or radix:
+---
 
-| Size | Max | Average | Under excellent limit | Over pass limit |
-|---|---|---|---|---|
-| 100 | 1084 | 864.5 | 152 / 300 (< 700) | 0 |
-| 500 | 6784 | 6630.0 | 0 / 300 (< 5500) | 0 |
+# Benchmark mode
 
-Subject targets: 100 values under 2000 to pass (under 700 excellent); 500 values under 12000 to pass (under 5500 excellent). The same tester also confirmed correct error handling, 0 operations on sorted input, accurate disorder percentages in `--bench`, and no memory leaks.
+Benchmark mode is enabled with:
 
-### Measured growth of the complex strategy
+```bash
+--bench
+```
 
-The tester's `--big-o` mode labels a strategy O(n log n) only if it uses at most `1.14 × n log₂ n` operations at n = 800. Radix uses about `1.6 × n log₂ n`, so the tester files it under the next class. That check measures the constant factor, not the growth rate. The growth rate is what shows the complexity class: when n doubles, an O(n log n) cost grows by `2(log₂ n + 1) / log₂ n`, and an O(n√n) cost grows by `2√2 ≈ 2.83`. Measured over 100 runs per size:
+Example:
 
-| n | Avg operations | Measured ratio | O(n log n) predicts | O(n√n) predicts |
-|---|---|---|---|---|
-| 50 | 467 | | | |
-| 100 | 1084 | 2.32× | 2.35× | 2.83× |
-| 200 | 2468 | 2.28× | 2.30× | 2.83× |
-| 400 | 5536 | 2.24× | 2.26× | 2.83× |
-| 800 | 12272 | 2.22× | 2.23× | 2.83× |
+```bash
+./push_swap --bench --adaptive 3 2 1
+```
 
-The measurements follow the O(n log n) prediction at every size.
+Operations still go to `stdout`. Benchmark info goes only to `stderr`.
 
-## Contributions
+To hide operations and show only benchmark info:
 
-- **hcherif**: stack data structure and helpers; argument parsing and integer validation, including overflow and duplicate checks; the original swap, push, rotate and reverse-rotate operations; small-stack sort; radix sort; strategy flag parsing; initial Makefile.
-- **gbekur**: `t_ctx` refactor and per-operation counting; the missing `sb`, `ss`, `rr`, `rrr` operations; combined flag parsing with `--bench`; disorder metric; benchmark report; medium (chunk) strategy; simple (LIS + cheapest insertion) strategy; adaptive dispatcher; testing, norm compliance and documentation.
+```bash
+./push_swap --bench --adaptive 3 2 1 > /dev/null
+```
 
-## Resources
+Example output:
 
-- D. E. Knuth, *The Art of Computer Programming, Vol. 3: Sorting and Searching*: sorting methods and inversions.
-- T. H. Cormen, C. E. Leiserson, R. L. Rivest, C. Stein, *Introduction to Algorithms*: asymptotic notation, insertion sort, radix sort, dynamic programming.
-- Wikipedia articles: "Inversion (discrete mathematics)", "Longest increasing subsequence", "Radix sort".
-- [ft_ps_tester](https://github.com/italoalmeida0/ft_ps_tester): the test suite used for correctness, benchmarks and leak checks.
+```text
+[bench] disorder: 100.00%
+[bench] strategy: Adaptive / O(n log n)
+[bench] total_ops: 10
+[bench] sa: 0 sb: 0 ss: 0 pa: 4 pb: 4
+[bench] ra: 2 rb: 0 rr: 0 rra: 0 rrb: 0 rrr: 0
+```
 
-### Use of AI
+Benchmark mode reports:
 
-Claude (Anthropic) was used as an assistant for these tasks:
-- comparing the existing code with this version of the subject and listing the missing requirements;
-- designing the `t_ctx` structure used to count operations without global variables;
-- writing the disorder metric, the `--bench` report, combined flag parsing, the medium strategy and the LIS-based simple strategy;
-- finding the cause of tester failures on low-disorder inputs, which led to replacing a selection sort with the LIS-based method;
-- regenerating the 42 headers and drafting this README.
+- disorder percentage with two decimal places;
+- selected strategy;
+- theoretical complexity;
+- total number of operations;
+- how many times each operation was used.
 
-Every change was checked with `norminette`, `cc -Wall -Wextra -Werror`, the ft_ps_tester suite and leak checks.
+---
+
+# Performance
+
+The subject requires:
+
+| Input size | Passing limit |
+|---|---:|
+| 100 random integers | less than 2000 operations |
+| 500 random integers | less than 12000 operations |
+
+Recent tests after the final fixes produced:
+
+| Input | Checker | Operations |
+|---|---|---:|
+| 100 random integers | `OK` | 1084 |
+| 500 random integers | `OK` | 6519 |
+
+Example test:
+
+```bash
+ARG=$(shuf -i 0-9999 -n 100 | tr '\n' ' ')
+./push_swap $ARG | ./checker_linux $ARG
+./push_swap $ARG | wc -l
+```
+
+For 500 values:
+
+```bash
+ARG=$(shuf -i 0-99999 -n 500 | tr '\n' ' ')
+./push_swap $ARG | ./checker_linux $ARG
+./push_swap $ARG | wc -l
+```
+
+We also ran:
+
+```bash
+norminette
+```
+
+and:
+
+```bash
+valgrind --leak-check=full --show-leak-kinds=all
+```
+
+The tested paths finished with:
+
+```text
+in use at exit: 0 bytes in 0 blocks
+ERROR SUMMARY: 0 errors
+```
+
+---
+
+# Contributions
+
+## hcherif
+
+- stack data structure and stack helper functions;
+- argument parsing and integer validation;
+- overflow and duplicate checks;
+- swap, push, rotate and reverse-rotate operations;
+- small-stack helper functions;
+- radix sorting strategy;
+- strategy flag parsing;
+- initial Makefile implementation.
+
+## gbekur
+
+- `t_ctx` structure and operation counters;
+- `sb`, `ss`, `rr` and `rrr`;
+- benchmark mode and per-operation statistics;
+- disorder calculation;
+- combined flag handling;
+- Medium chunk-based strategy;
+- Simple LIS and cheapest-insertion strategy;
+- Adaptive strategy selection;
+- testing and debugging;
+- Norminette and Valgrind checks;
+- documentation.
+
+Both of us reviewed the final implementation and can explain the whole project during evaluation.
+
+---
+
+# Resources
+
+We used:
+
+- the 42 Push_swap subject;
+- 42 documentation and evaluation requirements;
+- *Introduction to Algorithms* by Cormen, Leiserson, Rivest and Stein;
+- Wikipedia articles on sorting algorithms, inversions, LIS, radix sort, and asymptotic complexity;
+- `ft_ps_tester` for extra testing;
+- Google Search for documentation and explanations.
+
+---
+
+How AI was used: Google Search AI Overview (used sometimes to understand a function before I started reproducing it, or to understand the difference between concepts while searching).

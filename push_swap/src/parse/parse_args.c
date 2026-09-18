@@ -25,14 +25,14 @@ static int	add_value(t_stack **a, int value)
 	return (1);
 }
 
-static int	parse_string(t_stack **a, char *arg, int argc, int *count)
+static int	parse_string(t_stack **a, char *arg, int *count)
 {
 	int	value;
 
-	if (!*arg || (argc > 1 && has_space(arg)))
-		return (0);
-	while (is_space(*arg))
+	while (*arg && is_space(*arg))
 		arg++;
+	if (*arg == '\0')
+		return (0);
 	while (*arg)
 	{
 		if (!read_number(&arg, &value) || !add_value(a, value))
@@ -53,7 +53,7 @@ int	parse_args(int argc, char **argv, t_stack **a)
 	count = 0;
 	while (index < argc)
 	{
-		if (!parse_string(a, argv[index], argc, &count))
+		if (!parse_string(a, argv[index], &count))
 		{
 			stack_clear(a);
 			return (0);
